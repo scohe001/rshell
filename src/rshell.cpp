@@ -6,10 +6,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <cstring>
-#include <string.h>
-#include <exception>
-#include <signal.h>
-#include <stdlib.h>
 #include <sstream>
 #include <vector>
 #include <algorithm>
@@ -57,23 +53,10 @@ string &trim(string &s) {
     return ltrim(rtrim(s));
 }
 
-void quit(int exit_val) {
-    cout << "\033[0m";
-    exit(exit_val);
-}
-
-void my_handler(int s){
-    cerr << endl;
-    quit(1);
-}
-
 //Run a command and do error checking
 //Return the return of the command (or 1 if it wasn't run)
 int run_cmd_(char *cmd, char **argv) {
-    if(strcmp(cmd, "exit") == 0) {
-        cout << "\033[0m";
-        exit(0);
-    }
+    if(strcmp(cmd, "exit") == 0) exit(0);
     int pid = fork();
     if(pid == -1) {
         perror("fork fail");
@@ -193,17 +176,8 @@ void parse_semi(char cmds[]) {
 }
 
 int main(int argc, char *argv[]) {
-
-    //Setup handler to change color back if they do ctrl-c
-    struct sigaction sigIntHandler;
-    sigIntHandler.sa_handler = my_handler;
-    sigemptyset(&sigIntHandler.sa_mask);
-    sigIntHandler.sa_flags = 0;
-    sigaction(SIGINT, &sigIntHandler, NULL);
-    
     
 	while(true) {
-        
         //Grab Username
         char uname[64] = "";
         if(getlogin_r(uname, sizeof(uname)-1) != 0) {
@@ -222,15 +196,13 @@ int main(int argc, char *argv[]) {
         string cmds;
         cout << GREEN << uname << "@" << YELLOW << hostname << RESET << "$ ";
         getline(cin, cmds);
-        //cout << "\033[0m";
         char cmd[cmds.size() + 1];
         strcpy(cmd, cmds.c_str());
         
-        if(cmds.at(0) == '#') continue;
-        
-        
         //Cut out a comment if there is one and pass to the parsers
+        if(cmds.at(0) == '#') continue;
         parse_semi(strtok(cmd, "#"));
     }
-    quit(0);
+    
+    return 0;
 }
