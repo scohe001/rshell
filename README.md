@@ -16,3 +16,7 @@ Just run the following commands in your normal (boring) shell and **bam!** you'l
     $ git checkout hw0
     $ make
     $ bin/rshell
+
+#### Known bugs
+
+*Pressing `ctrl-d` results in an infinite loop of printed prompts

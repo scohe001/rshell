@@ -1,0 +1,100 @@
+Script started on Fri Jan 23 20:25:40 2015
+[?1034hbash-3.2$ make
+mkdir bin
+g++ -ansi -pedantic -Wall -Werror src/rshell.cpp -o bin/rshell
+bash-3.2$ bin/rshell 
+[32maricohen@[33mAce-2.local[0m$ #Here come the tests...
+[32maricohen@[33mAce-2.local[0m$ ls #Test that commands work
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+[32maricohen@[33mAce-2.local[0m$ ls -a #Test parameters too!
+.		.git		README.md	src
+..		LICENSE.txt	a.out		tests
+.DS_Store	Makefile	bin
+[32maricohen@[33mAce-2.local[0m$ ls -mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm #Test long parameters
+LICENSE.txt, Makefile, README.md, a.out, bin, src, tests
+[32maricohen@[33mAce-2.local[0m$ ls -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a -a #Test many parameters
+.		.git		README.md	src
+..		LICENSE.txt	a.out		tests
+.DS_Store	Makefile	bin
+[32maricohen@[33mAce-2.local[0m$ ls ls ls ls #Make sure things are being passed as parameters
+ls: ls: No such file or directory
+ls: ls: No such file or directory
+ls: ls: No such file or directory
+[32maricohen@[33mAce-2.local[0m$ asdpofiahsdf #Check bad commands
+-bqsh: asdpofiahsdf: No such file or directory
+[32maricohen@[33mAce-2.local[0m$ 
+[32maricohen@[33mAce-2.local[0m$            ls #Test leading whitespace
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+[32maricohen@[33mAce-2.local[0m$ ls            #Test trailing whitespace
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+[32maricohen@[33mAce-2.local[0m$ ls           -a           -l #Test...sandwiched whitespace?
+total 232
+drwxr-xr-x  11 aricohen  staff    374 Jan 23 20:25 .
+drwx------+ 20 aricohen  staff    680 Jan 23 18:12 ..
+-rw-r--r--@  1 aricohen  staff   6148 Jan 23 18:50 .DS_Store
+drwxr-xr-x  15 aricohen  staff    510 Jan 23 20:25 .git
+-rw-r--r--@  1 aricohen  staff  34599 Jan 23 18:12 LICENSE.txt
+-rw-r--r--@  1 aricohen  staff    163 Jan 23 19:05 Makefile
+-rw-r--r--@  1 aricohen  staff    927 Jan 23 19:35 README.md
+-rwxr-xr-x   1 aricohen  staff  64628 Jan 23 19:05 a.out
+drwxr-xr-x   3 aricohen  staff    102 Jan 23 20:25 bin
+drwxr-xr-x   4 aricohen  staff    136 Jan 23 20:15 src
+drwxr-xr-x   4 aricohen  staff    136 Jan 23 20:14 tests
+[32maricohen@[33mAce-2.local[0m$             ls        -a        -l       #Test all 3
+total 232
+drwxr-xr-x  11 aricohen  staff    374 Jan 23 20:25 .
+drwx------+ 20 aricohen  staff    680 Jan 23 18:12 ..
+-rw-r--r--@  1 aricohen  staff   6148 Jan 23 18:50 .DS_Store
+drwxr-xr-x  15 aricohen  staff    510 Jan 23 20:25 .git
+-rw-r--r--@  1 aricohen  staff  34599 Jan 23 18:12 LICENSE.txt
+-rw-r--r--@  1 aricohen  staff    163 Jan 23 19:05 Makefile
+-rw-r--r--@  1 aricohen  staff    927 Jan 23 19:35 README.md
+-rwxr-xr-x   1 aricohen  staff  64628 Jan 23 19:05 a.out
+drwxr-xr-x   3 aricohen  staff    102 Jan 23 20:25 bin
+drwxr-xr-x   4 aricohen  staff    136 Jan 23 20:15 src
+drwxr-xr-x   4 aricohen  staff    136 Jan 23 20:14 tests
+[32maricohen@[33mAce-2.local[0m$ bin/rshell #Run itself
+[32maricohen@[33mAce-2.local[0m$ ; #Test semicolon
+[32maricohen@[33mAce-2.local[0m$ ls; #Test semicolon after command
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+[32maricohen@[33mAce-2.local[0m$ ls; pwd #Test semicolon to split commands
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+/Users/aricohen/Documents/rshell
+[32maricohen@[33mAce-2.local[0m$ date; pwd     ; #Test semicolon with whitespace
+Fri Jan 23 20:29:16 PST 2015
+/Users/aricohen/Documents/rshell
+[32maricohen@[33mAce-2.local[0m$ ;;;;;;; #Test many semicolons
+[32maricohen@[33mAce-2.local[0m$ ;;;;ls;;;;pwd;;;; #Test many semicolons with commands
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+/Users/aricohen/Documents/rshell
+[32maricohen@[33mAce-2.local[0m$ true && ls #Test && with true
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+[32maricohen@[33mAce-2.local[0m$ false && ls #Test && with false
+[32maricohen@[33mAce-2.local[0m$ true || ls #Test || with true
+[32maricohen@[33mAce-2.local[0m$ false || ls #Test || with false
+LICENSE.txt	README.md	bin		tests
+Makefile	a.out		src
+[32maricohen@[33mAce-2.local[0m$ false || true && date #Test multiple conditionals
+Fri Jan 23 20:29:54 PST 2015
+[32maricohen@[33mAce-2.local[0m$ && ls #Test bad conditional
+Bad conditionals
+[32maricohen@[33mAce-2.local[0m$ ls && #Test bad conditional
+Bad conditionals
+[32maricohen@[33mAce-2.local[0m$ ls &&&& pwd #Test bad conditional
+Bad conditionals
+[32maricohen@[33mAce-2.local[0m$ && && &&  #Test bad conditional
+Bad conditionals
+[32maricohen@[33mAce-2.local[0m$ true||ls #Test parsing with no space
+[32maricohen@[33mAce-2.local[0m$ exit #Make sure we can exit
+[32maricohen@[33mAce-2.local[0m$ exit #Make sure we can exit (second time since we're inside ourself)
+bash-3.2$ exit
+exit
+
+Script done on Fri Jan 23 20:30:53 2015

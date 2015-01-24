@@ -63,10 +63,11 @@ int run_cmd_(char *cmd, char **argv) {
         return 1;
     } else if(pid == 0) {
         if(execvp(cmd,argv) != 0) {
-            char err[7 + strlen(cmd) + 1];
+            char *err = new char[7 + strlen(cmd) + 1];
             strcpy(err, "-bqsh: ");
             strcat(err, cmd);
             perror(err);
+            delete [] err;
         }
         return 1;
     } else {
@@ -141,8 +142,10 @@ void parse_conditional(char cmds[]) {
             if(parsed.at(parsed.size()-1) == "") parsed.pop_back();
             parsed.push_back(string(2, prev));
             last_found = i + 1;
+            prev = '\0';
+        } else {
+            prev = s_cmds.at(i);
         }
-        prev = s_cmds.at(i);
     }
     parsed.push_back(s_cmds.substr(last_found, s_cmds.size() - last_found));
     trim(parsed.at(parsed.size()-1));
@@ -164,13 +167,16 @@ void parse_conditional(char cmds[]) {
 
 void parse_semi(char cmds[]) {
     if(cmds == NULL) return;
-    char space_test[strlen(cmds) + 1];
+    char *space_test = new char[strlen(cmds) + 1];
     strcpy(space_test, cmds);
     if(strtok(space_test, " \t\r\n") == NULL) return;
+    delete [] space_test;
     
     char *parsed = strtok(cmds, ";");
     while(parsed != NULL) {
-        parse_conditional(parsed);
+        string space_test = parsed;
+        trim(space_test);
+        if(space_test != "") parse_conditional(parsed);
         parsed = strtok(NULL, ";");
     }
 }
@@ -196,12 +202,13 @@ int main(int argc, char *argv[]) {
         string cmds;
         cout << GREEN << uname << "@" << YELLOW << hostname << RESET << "$ ";
         getline(cin, cmds);
-        char cmd[cmds.size() + 1];
+        char *cmd = new char[cmds.size() + 1];
         strcpy(cmd, cmds.c_str());
         
         //Cut out a comment if there is one and pass to the parsers
-        if(cmds.at(0) == '#') continue;
+        if(cmds.size() == 0 || cmds.at(0) == '#') continue;
         parse_semi(strtok(cmd, "#"));
+        delete [] cmd;
     }
     
     return 0;

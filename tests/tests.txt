@@ -22,7 +22,7 @@ false && ls #Test && with false
 true || ls #Test || with true
 false || ls #Test || with false
 false || true && date #Test multiple conditionals
-$$ ls #Test bad conditional
+&& ls #Test bad conditional
 ls && #Test bad conditional
 ls &&&& pwd #Test bad conditional
 && && &&  #Test bad conditional
