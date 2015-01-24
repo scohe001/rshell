@@ -89,14 +89,14 @@ int run_cmd(string line) {
     }
     
     char **argv = new char*[cmds_vec.size() + 1];
-    for(int x=0; x<cmds_vec.size(); x++) {
+    for(unsigned x=0; x<cmds_vec.size(); x++) {
         argv[x] = new char[cmds_vec.at(x).size() + 1];
         strcpy(argv[x], cmds_vec.at(x).c_str());
     }
     argv[cmds_vec.size()] = NULL;
     
     int result = run_cmd_(argv[0], argv);
-    for(int x=0; x<=cmds_vec.size(); x++) {
+    for(unsigned x=0; x<=cmds_vec.size(); x++) {
         delete []argv[x];
     }
     delete []argv;
@@ -135,7 +135,7 @@ void parse_conditional(char cmds[]) {
     //Parse parse parse
     char prev = '\0';
     int last_found = 0;
-    for(int i=0; i < s_cmds.size(); i++) {
+    for(unsigned i=0; i < s_cmds.size(); i++) {
         if(s_cmds.at(i) == prev && (prev == '&' || prev == '|')) {
             parsed.push_back(s_cmds.substr(last_found, i-last_found-1));
             trim(parsed.at(parsed.size()-1));
