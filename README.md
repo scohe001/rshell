@@ -20,3 +20,4 @@ Just run the following commands in your normal (boring) shell and **bam!** you'l
 #### Known bugs
 
 *Pressing `ctrl-d` results in an infinite loop of printed prompts
+*Sometimes takes two `exit` commands to quit. Recommended using `ctrl-c`
