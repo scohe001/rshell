@@ -177,7 +177,7 @@ void parse_semi(char cmds[]) {
 
 int main(int argc, char *argv[]) {
     
-	while(true) {
+    while(true) {
         //Grab Username
         char uname[64] = "";
         if(getlogin_r(uname, sizeof(uname)-1) != 0) {
