@@ -11,7 +11,7 @@ With its fluid and dynamic interface, rshell will outdo any other shell you can 
 #### Installation
 Just run the following commands in your normal (boring) shell and **bam!** you'll have rshell up and running!
 
-    $ git clone  http://github.com/yourusername/rshell.git
+    $ git clone  https://github.com/scohe001/rshell.git
     $ cd rshell
     $ git checkout hw0
     $ make
