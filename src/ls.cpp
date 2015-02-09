@@ -109,11 +109,20 @@ void reg_print_dir(string dir, const set<char>& flags) {
     closedir(dirp);
 }
 
-void long_print(string dir, const set<char>& flags) {
+void long_print_dir(string dir, const set<char>& flags) {
     
 }
 
 void recursive_print_(string dir, const set<char>& flags) {
+    //Make sure we don't have a file
+    struct stat info;
+    if(stat(dir.c_str(), &info) != 0) {
+        perror(dir.c_str());
+        exit(1);
+    }
+    if(!(info.st_mode & S_IFDIR)) return;
+    
+    //If we have a dir
     DIR *dirp = opendir(dir.c_str());
     if(!dirp) {
         perror("Error opening directory");
@@ -139,7 +148,7 @@ void recursive_print_(string dir, const set<char>& flags) {
             if(direntp->d_name[0] == '.' && flags.find('a') == flags.end()) continue;
             cout << endl << current_dir << ":" << endl;
             if(flags.find('l') != flags.end()) {
-                long_print(current_dir, flags);
+                long_print_dir(current_dir, flags);
             } else {
                 reg_print_dir(current_dir, flags);
             }
@@ -148,7 +157,6 @@ void recursive_print_(string dir, const set<char>& flags) {
         
     }
     closedir(dirp);
-
 }
 
 int main(int argc, char *argv[]) {
@@ -164,7 +172,7 @@ int main(int argc, char *argv[]) {
             cout << endl << locations.at(x) << ":" << endl;
         }
         if(flags.find('l') != flags.end()) {
-            long_print(locations.at(x), flags);
+            long_print_dir(locations.at(x), flags);
         } else {
             reg_print_dir(locations.at(x), flags);
         }
