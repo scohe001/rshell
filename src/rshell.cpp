@@ -169,7 +169,7 @@ void parse_semi(char cmds[]) {
     if(cmds == NULL) return;
     char *space_test = new char[strlen(cmds) + 1];
     strcpy(space_test, cmds);
-    if(strtok(space_test, " \t\r\n") == NULL) return;
+    if(strtok(space_test, " \t\r\n") == NULL) {delete [] space_test; return;}
     delete [] space_test;
     
     char *parsed = strtok(cmds, ";");
