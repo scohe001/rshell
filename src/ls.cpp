@@ -14,6 +14,7 @@
 #include <vector>
 #include <string>
 #include <set>
+#include <algorithm>
 
 
 using namespace std;
@@ -172,6 +173,8 @@ void print_dir(string dir, const set<char>& flags) {
         perror(dir.c_str());
         exit(1);
     }
+    
+    vector<string> files;
     dirent *direntp;
     while ((direntp = readdir(dirp))) {
         if(!direntp) {
@@ -179,15 +182,21 @@ void print_dir(string dir, const set<char>& flags) {
             exit(1);
         }
         
-        string s = direntp->d_name;
-        string current_dir = (dir.at(dir.size()-1) == '/') ? dir+ s : dir + "/" + s;
-        
-        if(flags.find('l') == flags.end())
-            reg_print_file(current_dir, direntp->d_name, flags);
-        else
-            long_print_file(current_dir, direntp->d_name, flags);
+        files.push_back(direntp->d_name);
     }
     closedir(dirp);
+    
+    sort(files.begin(), files.end());
+    
+    for(unsigned x=0; x<files.size(); x++) {
+        string current_dir = (dir.at(dir.size()-1) == '/') ?
+                            dir + files.at(x) : dir + "/" + files.at(x);
+        
+        if(flags.find('l') == flags.end())
+            reg_print_file(current_dir, files.at(x), flags);
+        else
+            long_print_file(current_dir, files.at(x), flags);
+    }
 }
 
 void recursive_print_(string dir, const set<char>& flags) {
