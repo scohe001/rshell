@@ -4,11 +4,13 @@
 #include <pwd.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <string.h>
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include <set>
+
 
 using namespace std;
 
@@ -24,6 +26,7 @@ using namespace std;
 #define WHITE   "\033[37m"      /* White */
 #define BOLD    "\033[1m"       /* Bold */
 #define BLINK   "\033[5m"       /* Blinks less than 150 per minute */
+#define HIDDEN  "\033[47m"      /* White background */
 
 void parse_params(int argc, char *argv[], set<char>& flags, vector<string>& locs) {
     bool p_flags = true; //Check if we're in flags or files
@@ -48,6 +51,88 @@ void parse_params(int argc, char *argv[], set<char>& flags, vector<string>& locs
     }
 }
 
+void reg_print(string dir, const set<char>& flags) {
+    DIR *dirp = opendir(dir.c_str());
+    if(!dirp) {
+        perror("Error opening directory");
+        exit(1);
+    }
+    dirent *direntp;
+    while ((direntp = readdir(dirp))) {
+        if(!direntp) {
+            perror((const char*)dirp);
+            exit(1);
+        }
+        
+        string s = direntp->d_name;
+        string current_dir = (dir.at(dir.size()-1) == '/') ? dir+ s : dir + "/" + s;
+        
+        struct stat info;
+        if(stat(current_dir.c_str(), &info) != 0) {
+            perror((const char*)direntp->d_name);
+            exit(1);
+        }
+        
+        if(info.st_mode & S_IXUSR) {
+            //cout << "found exexutable: ";
+            cout << GREEN;
+        }
+        if(info.st_mode & S_IFDIR) {
+            //cout << "found dir: ";
+            cout << BOLD << BLUE;
+        }
+        
+        if(direntp->d_name[0] == '.' && flags.find('a') == flags.end()) continue;
+        else if(direntp->d_name[0] == '.') {
+            cout << HIDDEN;
+        }
+        
+        cout << direntp->d_name << RESET << endl;
+    }
+    closedir(dirp);
+}
+
+void long_print(string dir, const set<char>& flags) {
+    
+}
+
+void recursive_print_(string dir, const set<char>& flags) {
+    DIR *dirp = opendir(dir.c_str());
+    if(!dirp) {
+        perror("Error opening directory");
+        exit(1);
+    }
+    dirent *direntp;
+    while ((direntp = readdir(dirp))) {
+        if(!direntp) {
+            perror("Error reading directory");
+            exit(1);
+        }
+        
+        string s = direntp->d_name;
+        string current_dir = (dir.at(dir.size()-1) == '/') ? dir+ s : dir + "/" + s;
+        
+        struct stat info;
+        if(stat(current_dir.c_str(), &info) != 0) {
+            perror("Error fetching file info");
+            exit(1);
+        }
+        
+        if((info.st_mode & S_IFDIR) && s != "." && s != "..") {
+            if(direntp->d_name[0] == '.' && flags.find('a') == flags.end()) continue;
+            cout << endl << current_dir << ":" << endl;
+            if(flags.find('l') != flags.end()) {
+                long_print(current_dir, flags);
+            } else {
+                reg_print(current_dir, flags);
+            }
+            recursive_print_(current_dir, flags);
+        }
+        
+    }
+    closedir(dirp);
+
+}
 
 int main(int argc, char *argv[]) {
     set<char> flags;
@@ -57,26 +142,16 @@ int main(int argc, char *argv[]) {
     //If there's no location, assume current dir
     if(locations.empty()) locations.push_back(".");
     
-    
-    /*cout << "Flags: ";
-    for (std::set<char>::iterator it = flags.begin(); it != flags.end(); ++it)
-    {
-        cout << *it; // Note the "*" here
-    }
-    cout << endl << "Params: " << endl;
-    
     for(int x=0; x<locations.size(); x++) {
-        cout << locations[x] << endl;
-    }*/
-    
-    //char dirName[] = argv[1];
-    DIR *dirp = opendir(argv[1]);
-    dirent *direntp;
-    while ((direntp = readdir(dirp))) {
-        //struct stat s;
-        //stat("test",&s);
-        //std::cout << "num bytes: " << s.st_size << std::endl;
-        cout << direntp->d_name << endl;  // use stat here to find attributes of file
+        if(flags.find('R') != flags.end()) {
+            recursive_print_(locations.at(x), flags);
+        } else if(flags.find('l') != flags.end()) {
+            long_print(locations.at(x), flags);
+        } else {
+            reg_print(locations.at(x), flags);
+        }
     }
-    closedir(dirp);
+    //char dirName[] = argv[1];
+    
+    return 0;
 }
