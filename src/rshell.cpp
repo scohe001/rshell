@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
         strcpy(cmd, cmds.c_str());
         
         //Cut out a comment if there is one and pass to the parsers
-        if(cmds.size() == 0 || cmds.at(0) == '#') continue;
+        if(cmds.size() == 0 || cmds.at(0) == '#') {delete [] cmd; continue;}
         parse_semi(strtok(cmd, "#"));
         delete [] cmd;
     }
