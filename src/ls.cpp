@@ -209,7 +209,7 @@ int main(int argc, char *argv[]) {
     //If there's no location, assume current dir
     if(locations.empty()) locations.push_back(".");
     
-    for(int x=0; x<locations.size(); x++) {
+    for(unsigned x=0; x<locations.size(); x++) {
         if(locations.size() > 1 || flags.find('R') != flags.end()) {
             cout << endl << locations.at(x) << ":" << endl;
         }
