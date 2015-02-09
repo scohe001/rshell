@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
 
 #include <iostream>
 #include <vector>
