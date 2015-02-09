@@ -76,7 +76,46 @@ void reg_print_file(string path, string name, const set<char>& flags) {
 }
 
 void long_print_file(string path, string name, const set<char>& flags) {
+    struct stat info;
+    if(stat(path.c_str(), &info) != 0) {
+        perror(path.c_str());
+        exit(1);
+    }
     
+    if(name[0] == '.' && flags.find('a') == flags.end()) return;
+    
+    cout << (S_ISDIR(info.st_mode) ? 'd' :
+             S_ISLNK(info.st_mode) ? 'l' : '-')
+    
+        << ((info.st_mode & S_IRUSR) ? 'r' : '-')
+        << ((info.st_mode & S_IWUSR) ? 'w' : '-')
+        << ((info.st_mode & S_IXUSR) ? 'x' : '-')
+        
+        << ((info.st_mode & S_IRGRP) ? 'r' : '-')
+        << ((info.st_mode & S_IWGRP) ? 'w' : '-')
+        << ((info.st_mode & S_IXGRP) ? 'x' : '-')
+        
+        << ((info.st_mode & S_IROTH) ? 'r' : '-')
+        << ((info.st_mode & S_IWOTH) ? 'w' : '-')
+        << ((info.st_mode & S_IXOTH) ? 'x' : '-');
+    
+    
+    /*if(info.st_mode & S_IXUSR) {
+        //cout << "found exexutable: ";
+        cout << GREEN;
+    }
+    if(info.st_mode & S_IFDIR) {
+        //cout << "found dir: ";
+        cout << BOLD << BLUE;
+    }
+    
+    if(name[0] == '.' && flags.find('a') == flags.end()) return;
+    else if(name[0] == '.') {
+        cout << HIDDEN;
+    }*/
+    
+    cout << name << RESET << endl;
+
 }
 
 void print_dir(string dir, const set<char>& flags) {
