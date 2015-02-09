@@ -121,7 +121,7 @@ void long_print_file(string path, string name, const set<char>& flags) {
     }
     cout << group_info->gr_name << ' ';
     
-    cout << info.st_size << (info.st_size < 1000 ? "\t\t" : "\t");
+    cout << info.st_size << (info.st_size < 100 ? "\t\t" : "\t");
     struct tm *date = localtime (&info.st_mtime);
     if(!date) {
         perror("Error fetching date");
