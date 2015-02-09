@@ -75,7 +75,11 @@ void reg_print_file(string path, string name, const set<char>& flags) {
     cout << name << RESET << endl;
 }
 
-void reg_print_dir(string dir, const set<char>& flags) {
+void long_print_file(string path, string name, const set<char>& flags) {
+    
+}
+
+void print_dir(string dir, const set<char>& flags) {
     //In the case we have a file
     struct stat info;
     if(stat(dir.c_str(), &info) != 0) {
@@ -84,7 +88,10 @@ void reg_print_dir(string dir, const set<char>& flags) {
     }
     
     if(!(info.st_mode & S_IFDIR)) {
-        reg_print_file(dir, dir, flags);
+        if(flags.find('l') == flags.end())
+            reg_print_file(dir, dir, flags);
+        else
+            long_print_file(dir, dir, flags);
         return;
     }
     
@@ -104,13 +111,12 @@ void reg_print_dir(string dir, const set<char>& flags) {
         string s = direntp->d_name;
         string current_dir = (dir.at(dir.size()-1) == '/') ? dir+ s : dir + "/" + s;
         
-        reg_print_file(current_dir, direntp->d_name, flags);
+        if(flags.find('l') == flags.end())
+            reg_print_file(current_dir, direntp->d_name, flags);
+        else
+            long_print_file(current_dir, direntp->d_name, flags);
     }
     closedir(dirp);
-}
-
-void long_print_dir(string dir, const set<char>& flags) {
-    
 }
 
 void recursive_print_(string dir, const set<char>& flags) {
@@ -147,14 +153,9 @@ void recursive_print_(string dir, const set<char>& flags) {
         if((info.st_mode & S_IFDIR) && s != "." && s != "..") {
             if(direntp->d_name[0] == '.' && flags.find('a') == flags.end()) continue;
             cout << endl << current_dir << ":" << endl;
-            if(flags.find('l') != flags.end()) {
-                long_print_dir(current_dir, flags);
-            } else {
-                reg_print_dir(current_dir, flags);
-            }
+            print_dir(current_dir, flags);
             recursive_print_(current_dir, flags);
         }
-        
     }
     closedir(dirp);
 }
@@ -171,16 +172,11 @@ int main(int argc, char *argv[]) {
         if(locations.size() > 1 || flags.find('R') != flags.end()) {
             cout << endl << locations.at(x) << ":" << endl;
         }
-        if(flags.find('l') != flags.end()) {
-            long_print_dir(locations.at(x), flags);
-        } else {
-            reg_print_dir(locations.at(x), flags);
-        }
+        print_dir(locations.at(x), flags);
         if(flags.find('R') != flags.end()) {
             recursive_print_(locations.at(x), flags);
         }
     }
-    //char dirName[] = argv[1];
     
     return 0;
 }
