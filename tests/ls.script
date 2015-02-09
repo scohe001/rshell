@@ -1,0 +1,188 @@
+Script started on Mon 09 Feb 2015 02:20:46 AM PST
+~
+scohe001@hammer $ git clone https://github.com/scohe001/rshell.git
+Initialized empty Git repository in /home/csmajs/scohe001/rshell/.git/
+remote: Counting objects: 126, done.[K
+remote: Compressing objects:   1% (1/67)   [Kremote: Compressing objects:   2% (2/67)   [Kremote: Compressing objects:   4% (3/67)   [Kremote: Compressing objects:   5% (4/67)   [Kremote: Compressing objects:   7% (5/67)   [Kremote: Compressing objects:   8% (6/67)   [Kremote: Compressing objects:  10% (7/67)   [Kremote: Compressing objects:  11% (8/67)   [Kremote: Compressing objects:  13% (9/67)   [Kremote: Compressing objects:  14% (10/67)   [Kremote: Compressing objects:  16% (11/67)   [Kremote: Compressing objects:  17% (12/67)   [Kremote: Compressing objects:  19% (13/67)   [Kremote: Compressing objects:  20% (14/67)   [Kremote: Compressing objects:  22% (15/67)   [Kremote: Compressing objects:  23% (16/67)   [Kremote: Compressing objects:  25% (17/67)   [Kremote: Compressing objects:  26% (18/67)   [Kremote: Compressing objects:  28% (19/67)   [Kremote: Compressing objects:  29% (20/67)   [Kremote: Compressing objects:  31% (21/67)   [Kremote: Compressing objects:  32% (22/67)   [Kremote: Compressing objects:  34% (23/67)   [Kremote: Compressing objects:  35% (24/67)   [Kremote: Compressing objects:  37% (25/67)   [Kremote: Compressing objects:  38% (26/67)   [Kremote: Compressing objects:  40% (27/67)   [Kremote: Compressing objects:  41% (28/67)   [Kremote: Compressing objects:  43% (29/67)   [Kremote: Compressing objects:  44% (30/67)   [Kremote: Compressing objects:  46% (31/67)   [Kremote: Compressing objects:  47% (32/67)   [Kremote: Compressing objects:  49% (33/67)   [Kremote: Compressing objects:  50% (34/67)   [Kremote: Compressing objects:  52% (35/67)   [Kremote: Compressing objects:  53% (36/67)   [Kremote: Compressing objects:  55% (37/67)   [Kremote: Compressing objects:  56% (38/67)   [Kremote: Compressing objects:  58% (39/67)   [Kremote: Compressing objects:  59% (40/67)   [Kremote: Compressing objects:  61% (41/67)   [Kremote: Compressing objects:  62% (42/67)   [Kremote: Compressing objects:  64% (43/67)   [Kremote: Compressing objects:  65% (44/67)   [Kremote: Compressing objects:  67% (45/67)   [Kremote: Compressing objects:  68% (46/67)   [Kremote: Compressing objects:  70% (47/67)   [Kremote: Compressing objects:  71% (48/67)   [Kremote: Compressing objects:  73% (49/67)   [Kremote: Compressing objects:  74% (50/67)   [Kremote: Compressing objects:  76% (51/67)   [Kremote: Compressing objects:  77% (52/67)   [Kremote: Compressing objects:  79% (53/67)   [Kremote: Compressing objects:  80% (54/67)   [Kremote: Compressing objects:  82% (55/67)   [Kremote: Compressing objects:  83% (56/67)   [Kremote: Compressing objects:  85% (57/67)   [Kremote: Compressing objects:  86% (58/67)   [Kremote: Compressing objects:  88% (59/67)   [Kremote: Compressing objects:  89% (60/67)   [Kremote: Compressing objects:  91% (61/67)   [Kremote: Compressing objects:  92% (62/67)   [Kremote: Compressing objects:  94% (63/67)   [Kremote: Compressing objects:  95% (64/67)   [Kremote: Compressing objects:  97% (65/67)   [Kremote: Compressing objects:  98% (66/67)   [Kremote: Compressing objects: 100% (67/67)   [Kremote: Compressing objects: 100% (67/67), done.[K
+Receiving objects:   0% (1/126)   Receiving objects:   1% (2/126)   Receiving objects:   2% (3/126)   Receiving objects:   3% (4/126)   Receiving objects:   4% (6/126)   Receiving objects:   5% (7/126)   Receiving objects:   6% (8/126)   Receiving objects:   7% (9/126)   Receiving objects:   8% (11/126)   Receiving objects:   9% (12/126)   Receiving objects:  10% (13/126)   Receiving objects:  11% (14/126)   Receiving objects:  12% (16/126)   Receiving objects:  13% (17/126)   Receiving objects:  14% (18/126)   Receiving objects:  15% (19/126)   Receiving objects:  16% (21/126)   Receiving objects:  17% (22/126)   Receiving objects:  18% (23/126)   Receiving objects:  19% (24/126)   Receiving objects:  20% (26/126)   Receiving objects:  21% (27/126)   Receiving objects:  22% (28/126)   Receiving objects:  23% (29/126)   Receiving objects:  24% (31/126)   Receiving objects:  25% (32/126)   Receiving objects:  26% (33/126)   Receiving objects:  27% (35/126)   Receiving objects:  28% (36/126)   Receiving objects:  29% (37/126)   Receiving objects:  30% (38/126)   Receiving objects:  31% (40/126)   Receiving objects:  32% (41/126)   Receiving objects:  33% (42/126)   Receiving objects:  34% (43/126)   Receiving objects:  35% (45/126)   Receiving objects:  36% (46/126)   Receiving objects:  37% (47/126)   Receiving objects:  38% (48/126)   Receiving objects:  39% (50/126)   Receiving objects:  40% (51/126)   Receiving objects:  41% (52/126)   Receiving objects:  42% (53/126)   Receiving objects:  43% (55/126)   Receiving objects:  44% (56/126)   Receiving objects:  45% (57/126)   Receiving objects:  46% (58/126)   Receiving objects:  47% (60/126)   Receiving objects:  48% (61/126)   Receiving objects:  49% (62/126)   Receiving objects:  50% (63/126)   Receiving objects:  51% (65/126)   Receiving objects:  52% (66/126)   Receiving objects:  53% (67/126)   Receiving objects:  54% (69/126)   Receiving objects:  55% (70/126)   Receiving objects:  56% (71/126)   Receiving objects:  57% (72/126)   Receiving objects:  58% (74/126)   Receiving objects:  59% (75/126)   Receiving objects:  60% (76/126)   Receiving objects:  61% (77/126)   Receiving objects:  62% (79/126)   Receiving objects:  63% (80/126)   Receiving objects:  64% (81/126)   Receiving objects:  65% (82/126)   remote: Total 126 (delta 30), reused 0 (delta 0)[K
+Receiving objects:  66% (84/126)   Receiving objects:  67% (85/126)   Receiving objects:  68% (86/126)   Receiving objects:  69% (87/126)   Receiving objects:  70% (89/126)   Receiving objects:  71% (90/126)   Receiving objects:  72% (91/126)   Receiving objects:  73% (92/126)   Receiving objects:  74% (94/126)   Receiving objects:  75% (95/126)   Receiving objects:  76% (96/126)   Receiving objects:  77% (98/126)   Receiving objects:  78% (99/126)   Receiving objects:  79% (100/126)   Receiving objects:  80% (101/126)   Receiving objects:  81% (103/126)   Receiving objects:  82% (104/126)   Receiving objects:  83% (105/126)   Receiving objects:  84% (106/126)   Receiving objects:  85% (108/126)   Receiving objects:  86% (109/126)   Receiving objects:  87% (110/126)   Receiving objects:  88% (111/126)   Receiving objects:  89% (113/126)   Receiving objects:  90% (114/126)   Receiving objects:  91% (115/126)   Receiving objects:  92% (116/126)   Receiving objects:  93% (118/126)   Receiving objects:  94% (119/126)   Receiving objects:  95% (120/126)   Receiving objects:  96% (121/126)   Receiving objects:  97% (123/126)   Receiving objects:  98% (124/126)   Receiving objects:  99% (125/126)   Receiving objects: 100% (126/126)   Receiving objects: 100% (126/126), 31.37 KiB, done.
+Resolving deltas:   0% (0/52)   Resolving deltas:   1% (1/52)   Resolving deltas:   9% (5/52)   Resolving deltas:  15% (8/52)   Resolving deltas:  19% (10/52)   Resolving deltas:  28% (15/52)   Resolving deltas:  32% (17/52)   Resolving deltas:  40% (21/52)   Resolving deltas:  42% (22/52)   Resolving deltas:  73% (38/52)   Resolving deltas:  75% (39/52)   Resolving deltas:  98% (51/52)   Resolving deltas: 100% (52/52)   Resolving deltas: 100% (52/52), done.
+~
+scohe001@hammer $ cd rshell/
+~/rshell
+scohe001@hammer $ git checkout hw1
+Note: checking out 'hw1'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at c74ac81... Fixed tests
+~/rshell
+scohe001@hammer $ make
+rm -rfv bin
+mkdir bin
+g++ -ansi -pedantic -Wall -Werror src/rshell.cpp -o bin/rshell
+g++ -ansi -pedantic -Wall -Werror src/ls.cpp -o bin/ls
+~/rshell
+scohe001@hammer $ bin/ls[K[K[K[K[K[Ktests/tests_ls.sh 
+[32m[1m[34m[32m[1m[34m[32m[1m[34mLICENSE.txt[0m
+Makefile[0m
+README.md[0m
+[32m[1m[34mbin[0m
+[32m[1m[34msrc[0m
+[32m[1m[34mtests[0m
+
+[32m[1m[34m[32m[1m[34mls.cpp[0m
+rshell.cpp[0m
+
+
+src:
+[32m[1m[34m[32m[1m[34mls.cpp[0m
+rshell.cpp[0m
+
+bin:
+[32m[1m[34m[32m[1m[34m[32mls[0m
+[32mrshell[0m
+
+Makefile[0m
+
+
+MakeFile:
+MakeFile: No such file or directory
+
+
+src:
+[32m[1m[34m[32m[1m[34mls.cpp[0m
+rshell.cpp[0m
+
+Makefile:
+Makefile[0m
+
+[32m[1m[34m[47m.[0m
+[32m[1m[34m[47m..[0m
+[32m[1m[34m[47m.git[0m
+LICENSE.txt[0m
+Makefile[0m
+README.md[0m
+[32m[1m[34mbin[0m
+[32m[1m[34msrc[0m
+[32m[1m[34mtests[0m
+
+[32m[1m[34m[47m.[0m
+[32m[1m[34m[47m..[0m
+ls.cpp[0m
+rshell.cpp[0m
+
+Makefile[0m
+
+
+src:
+[32m[1m[34m[47m.[0m
+[32m[1m[34m[47m..[0m
+ls.cpp[0m
+rshell.cpp[0m
+
+bin:
+[32m[1m[34m[47m.[0m
+[32m[1m[34m[47m..[0m
+[32mls[0m
+[32mrshell[0m
+
+-rw------- 1 scohe001 csmajs 34599	Feb   9 02:17 LICENSE.txt[0m
+-rw------- 1 scohe001 csmajs 291	Feb   9 02:17 Makefile[0m
+-rw------- 1 scohe001 csmajs 998	Feb   9 02:17 README.md[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34mbin[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34msrc[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34mtests[0m
+
+
+.:
+[32m[1m[34m[32m[1m[34m[32m[1m[34mLICENSE.txt[0m
+Makefile[0m
+README.md[0m
+[32m[1m[34mbin[0m
+[32m[1m[34msrc[0m
+[32m[1m[34mtests[0m
+
+./src:
+[32m[1m[34m[32m[1m[34mls.cpp[0m
+rshell.cpp[0m
+
+./tests:
+[32m[1m[34m[32m[1m[34mexec.script[0m
+[32mtests_ls.sh[0m
+tests_rshell.txt[0m
+
+./bin:
+[32m[1m[34m[32m[1m[34m[32mls[0m
+[32mrshell[0m
+
+drwx------ 6 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34m[47m.[0m
+drwx------ 45 scohe001 csmajs 8192	Feb   9 02:17 [32m[1m[34m[47m..[0m
+drwx------ 8 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34m[47m.git[0m
+-rw------- 1 scohe001 csmajs 34599	Feb   9 02:17 LICENSE.txt[0m
+-rw------- 1 scohe001 csmajs 291	Feb   9 02:17 Makefile[0m
+-rw------- 1 scohe001 csmajs 998	Feb   9 02:17 README.md[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34mbin[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34msrc[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34mtests[0m
+
+drwx------ 6 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34m[47m.[0m
+drwx------ 45 scohe001 csmajs 8192	Feb   9 02:17 [32m[1m[34m[47m..[0m
+drwx------ 8 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34m[47m.git[0m
+-rw------- 1 scohe001 csmajs 34599	Feb   9 02:17 LICENSE.txt[0m
+-rw------- 1 scohe001 csmajs 291	Feb   9 02:17 Makefile[0m
+-rw------- 1 scohe001 csmajs 998	Feb   9 02:17 README.md[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34mbin[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34msrc[0m
+drwx------ 2 scohe001 csmajs 4096	Feb   9 02:17 [32m[1m[34mtests[0m
+
+[32m[1m[34m[47m.[0m
+[32m[1m[34m[47m..[0m
+[32m[1m[34m[47m.git[0m
+LICENSE.txt[0m
+Makefile[0m
+README.md[0m
+[32m[1m[34mbin[0m
+[32m[1m[34msrc[0m
+[32m[1m[34mtests[0m
+
+
+src:
+[32m[1m[34m[47m.[0m
+[32m[1m[34m[47m..[0m
+ls.cpp[0m
+rshell.cpp[0m
+
+-l:
+-l: No such file or directory
+
+ls: illegal option -- z
+usage: ls [-Ral] [file ...]
+
+ls: illegal option -- z
+usage: ls [-Ral] [file ...]
+
+asdfasdfasdf: No such file or directory
+
+asdfasdfasdf: No such file or directory
+
+
+src:
+[32m[1m[34m[32m[1m[34mls.cpp[0m
+rshell.cpp[0m
+
+asdfasdfasdf:
+asdfasdfasdf: No such file or directory
+
+~/rshell
+scohe001@hammer $ exit
+exit
+
+Script done on Mon 09 Feb 2015 02:21:41 AM PST
