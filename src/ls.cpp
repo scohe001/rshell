@@ -6,6 +6,9 @@
 #include <unistd.h>
 
 #include <iostream>
+#include <vector>
+#include <string>
+#include <set>
 
 using namespace std;
 
@@ -19,25 +22,61 @@ using namespace std;
 #define MAGENTA "\033[35m"      /* Magenta */
 #define CYAN    "\033[36m"      /* Cyan */
 #define WHITE   "\033[37m"      /* White */
-#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
-#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
-#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
-#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
-#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
-#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
-#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
-#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+#define BOLD    "\033[1m"       /* Bold */
+#define BLINK   "\033[5m"       /* Blinks less than 150 per minute */
+
+void parse_params(int argc, char *argv[], set<char>& flags, vector<string>& locs) {
+    bool p_flags = true; //Check if we're in flags or files
+    for(int x=1; x<argc; x++) {
+        if(p_flags) {
+            if(argv[x][0] == '-') { //If it starts with '-' it's a flag...
+                for(int y=1; argv[x][y]; y++) { //Grab all of them if valid
+                    if(argv[x][y] != 'l' && argv[x][y] != 'a' && argv[x][y] != 'R') {
+                        cerr << "ls: illegal option -- " << argv[x][y] << endl;
+                        cerr << "usage: ls [-Ral] [file ...]" <<endl;
+                        exit(1);
+                    }
+                    flags.insert(argv[x][y]);
+                }
+            } else { //Toggle to taking paths
+                p_flags = false;
+            }
+        }
+        if(!p_flags) { //Need to check both so we don't miss the first
+            locs.push_back(argv[x]);
+        }
+    }
+}
+
 
 int main(int argc, char *argv[]) {
+    set<char> flags;
+    vector<string> locations;
+    parse_params(argc, argv, flags, locations);
     
-    //struct stat s;
-    //stat("test",&s);
-    //std::cout << "num bytes: " << s.st_size << std::endl;
+    //If there's no location, assume current dir
+    if(locations.empty()) locations.push_back(".");
     
-    char dirName[] = ".";
-    DIR *dirp = opendir(dirName);
+    
+    /*cout << "Flags: ";
+    for (std::set<char>::iterator it = flags.begin(); it != flags.end(); ++it)
+    {
+        cout << *it; // Note the "*" here
+    }
+    cout << endl << "Params: " << endl;
+    
+    for(int x=0; x<locations.size(); x++) {
+        cout << locations[x] << endl;
+    }*/
+    
+    //char dirName[] = argv[1];
+    DIR *dirp = opendir(argv[1]);
     dirent *direntp;
-    while ((direntp = readdir(dirp)))
+    while ((direntp = readdir(dirp))) {
+        //struct stat s;
+        //stat("test",&s);
+        //std::cout << "num bytes: " << s.st_size << std::endl;
         cout << direntp->d_name << endl;  // use stat here to find attributes of file
+    }
     closedir(dirp);
 }
