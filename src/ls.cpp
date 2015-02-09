@@ -51,10 +51,47 @@ void parse_params(int argc, char *argv[], set<char>& flags, vector<string>& locs
     }
 }
 
-void reg_print(string dir, const set<char>& flags) {
+void reg_print_file(string path, string name, const set<char>& flags) {
+    struct stat info;
+    if(stat(path.c_str(), &info) != 0) {
+        perror(path.c_str());
+        exit(1);
+    }
+    
+    if(info.st_mode & S_IXUSR) {
+        //cout << "found exexutable: ";
+        cout << GREEN;
+    }
+    if(info.st_mode & S_IFDIR) {
+        //cout << "found dir: ";
+        cout << BOLD << BLUE;
+    }
+    
+    if(name[0] == '.' && flags.find('a') == flags.end()) return;
+    else if(name[0] == '.') {
+        cout << HIDDEN;
+    }
+    
+    cout << name << RESET << endl;
+}
+
+void reg_print_dir(string dir, const set<char>& flags) {
+    //In the case we have a file
+    struct stat info;
+    if(stat(dir.c_str(), &info) != 0) {
+        perror(dir.c_str());
+        exit(1);
+    }
+    
+    if(!(info.st_mode & S_IFDIR)) {
+        reg_print_file(dir, dir, flags);
+        return;
+    }
+    
+    //In the case we have a directory
     DIR *dirp = opendir(dir.c_str());
     if(!dirp) {
-        perror("Error opening directory");
+        perror(dir.c_str());
         exit(1);
     }
     dirent *direntp;
@@ -67,27 +104,7 @@ void reg_print(string dir, const set<char>& flags) {
         string s = direntp->d_name;
         string current_dir = (dir.at(dir.size()-1) == '/') ? dir+ s : dir + "/" + s;
         
-        struct stat info;
-        if(stat(current_dir.c_str(), &info) != 0) {
-            perror((const char*)direntp->d_name);
-            exit(1);
-        }
-        
-        if(info.st_mode & S_IXUSR) {
-            //cout << "found exexutable: ";
-            cout << GREEN;
-        }
-        if(info.st_mode & S_IFDIR) {
-            //cout << "found dir: ";
-            cout << BOLD << BLUE;
-        }
-        
-        if(direntp->d_name[0] == '.' && flags.find('a') == flags.end()) continue;
-        else if(direntp->d_name[0] == '.') {
-            cout << HIDDEN;
-        }
-        
-        cout << direntp->d_name << RESET << endl;
+        reg_print_file(current_dir, direntp->d_name, flags);
     }
     closedir(dirp);
 }
@@ -124,7 +141,7 @@ void recursive_print_(string dir, const set<char>& flags) {
             if(flags.find('l') != flags.end()) {
                 long_print(current_dir, flags);
             } else {
-                reg_print(current_dir, flags);
+                reg_print_dir(current_dir, flags);
             }
             recursive_print_(current_dir, flags);
         }
@@ -143,12 +160,16 @@ int main(int argc, char *argv[]) {
     if(locations.empty()) locations.push_back(".");
     
     for(int x=0; x<locations.size(); x++) {
-        if(flags.find('R') != flags.end()) {
-            recursive_print_(locations.at(x), flags);
-        } else if(flags.find('l') != flags.end()) {
+        if(locations.size() > 1 || flags.find('R') != flags.end()) {
+            cout << endl << locations.at(x) << ":" << endl;
+        }
+        if(flags.find('l') != flags.end()) {
             long_print(locations.at(x), flags);
         } else {
-            reg_print(locations.at(x), flags);
+            reg_print_dir(locations.at(x), flags);
+        }
+        if(flags.find('R') != flags.end()) {
+            recursive_print_(locations.at(x), flags);
         }
     }
     //char dirName[] = argv[1];
