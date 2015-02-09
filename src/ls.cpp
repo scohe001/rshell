@@ -2,11 +2,13 @@
 #include <dirent.h>
 #include <errno.h>
 #include <pwd.h>
+#include <grp.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctime>
 
 #include <iostream>
 #include <vector>
@@ -99,22 +101,50 @@ void long_print_file(string path, string name, const set<char>& flags) {
         
         << ((info.st_mode & S_IROTH) ? 'r' : '-')
         << ((info.st_mode & S_IWOTH) ? 'w' : '-')
-        << ((info.st_mode & S_IXOTH) ? 'x' : '-');
+        << ((info.st_mode & S_IXOTH) ? 'x' : '-')
     
+        << ' ' << info.st_nlink << ' ';
     
-    /*if(info.st_mode & S_IXUSR) {
-        //cout << "found exexutable: ";
+    //get owner
+    struct passwd *user_info = getpwuid(info.st_uid);
+    if(!user_info) {
+        perror("Error fetching owner name");
+        exit(1);
+    }
+    cout << user_info->pw_name << ' ';
+    
+    //get group
+    struct group *group_info = getgrgid(info.st_gid);
+    if(!group_info) {
+        perror("Error fetching group name");
+        exit(1);
+    }
+    cout << group_info->gr_name << ' ';
+    
+    cout << info.st_size << (info.st_size < 1000 ? "\t\t" : "\t");
+    struct tm *date = localtime (&info.st_mtime);
+    if(!date) {
+        perror("Error fetching date");
+        exit(1);
+    }
+    char months[12][4] = {"Jan", "Feb", "Mar", "Apr",
+                         "May", "Jun", "Jul", "Aug",
+                         "Sep", "Oct", "Nov", "Dec"};
+    cout << months[date->tm_mon] << ' ';
+    cout << (date->tm_mday < 10 ? "  " : " ") << date->tm_mday << ' '
+        << (date->tm_hour < 10 ? "0" : "") << date->tm_hour << ':'
+        << (date->tm_min < 10 ? "0" : "") << date->tm_min << ' ';
+    
+    if(info.st_mode & S_IXUSR) {
         cout << GREEN;
     }
     if(info.st_mode & S_IFDIR) {
-        //cout << "found dir: ";
         cout << BOLD << BLUE;
     }
     
-    if(name[0] == '.' && flags.find('a') == flags.end()) return;
-    else if(name[0] == '.') {
+    if(name[0] == '.') {
         cout << HIDDEN;
-    }*/
+    }
     
     cout << name << RESET << endl;
 
