@@ -55,13 +55,28 @@ string &trim(string &s) {
 
 //Run a command and do error checking
 //Return the return of the command (or 1 if it wasn't run)
-int run_cmd_(char *cmd, char **argv) {
+int run_cmd_(char *cmd, char **argv, int in, int out) {
+//int run_cmd_(char *cmd, char **argv) {
     if(strcmp(cmd, "exit") == 0) exit(0);
     int pid = fork();
     if(pid == -1) {
         perror("fork fail");
         return 1;
     } else if(pid == 0) {
+        if(in != -1) {
+            close(0);
+            if(dup(in) != 0) {
+                perror("Error redirecting input");
+                return 1;
+            }
+        }
+        if(out != -1) {
+            close(1);
+            if(dup(out) != 1) {
+                perror("Error redirecting output");
+                return 1;
+            }
+        }
         if(execvp(cmd,argv) != 0) {
             char *err = new char[7 + strlen(cmd) + 1];
             strcpy(err, "-bqsh: ");
@@ -81,6 +96,8 @@ int run_cmd_(char *cmd, char **argv) {
 //Take a string and pull out the command (first word) and arguments
 // to pass to run_cmd_ to be run
 int run_cmd(string line) {
+    //TODO:
+    //Parse input redirection/pipes
     istringstream stream(line);
     vector<string> cmds_vec;
     string cmd;
@@ -95,7 +112,7 @@ int run_cmd(string line) {
     }
     argv[cmds_vec.size()] = NULL;
     
-    int result = run_cmd_(argv[0], argv);
+    int result = run_cmd_(argv[0], argv, -1, -1);
     for(unsigned x=0; x<=cmds_vec.size(); x++) {
         delete []argv[x];
     }
@@ -182,8 +199,15 @@ void parse_semi(char cmds[]) {
 }
 
 int main(int argc, char *argv[]) {
-    
-    while(true) {
+    //int run_cmd_(char *cmd, char **argv, int in, int out) {
+    int fd[2];
+    if(-1 == pipe(fd)) {
+        perror("Pipe fail");
+        return 1;
+    };
+    run_cmd_("ls", argv, -1, fd[0]);
+    run_cmd_("tail", argv, fd[1], -1);
+    /*while(true) {
         //Grab Username
         char uname[64] = "";
         if(getlogin_r(uname, sizeof(uname)-1) != 0) {
@@ -209,7 +233,7 @@ int main(int argc, char *argv[]) {
         if(cmds.size() == 0 || cmds.at(0) == '#') {delete [] cmd; continue;}
         parse_semi(strtok(cmd, "#"));
         delete [] cmd;
-    }
+    }*/
     
     return 0;
 }
