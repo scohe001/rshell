@@ -61,20 +61,20 @@ int run_cmd_(char *cmd, char **argv, int in, int out) {
     int pid = fork();
     if(pid == -1) {
         perror("fork fail");
-        return 1;
+        return -1;
     } else if(pid == 0) {
         if(in != -1) {
             close(0);
             if(dup(in) != 0) {
                 perror("Error redirecting input");
-                return 1;
+                return -1;
             }
         }
         if(out != -1) {
             close(1);
             if(dup(out) != 1) {
                 perror("Error redirecting output");
-                return 1;
+                return -1;
             }
         }
         if(execvp(cmd,argv) != 0) {
@@ -84,7 +84,7 @@ int run_cmd_(char *cmd, char **argv, int in, int out) {
             perror(err);
             delete [] err;
         }
-        return 1;
+        return -1;
     } else {
         int status;
         waitpid(pid, &status, WUNTRACED);
@@ -93,11 +93,23 @@ int run_cmd_(char *cmd, char **argv, int in, int out) {
     }
 }
 
+struct Command {
+    char *cmd;
+    char **argv;
+    int in;
+    int out;
+    
+    Command(char *cmd, char **argv, int in, int out)
+    :cmd(cmd), argv(argv), in(in), out(out) { }
+};
+
 //Take a string and pull out the command (first word) and arguments
 // to pass to run_cmd_ to be run
 int run_cmd(string line) {
     //TODO:
     //Parse input redirection/pipes
+
+    
     istringstream stream(line);
     vector<string> cmds_vec;
     string cmd;
@@ -112,6 +124,13 @@ int run_cmd(string line) {
     }
     argv[cmds_vec.size()] = NULL;
     
+    
+    /*int status;
+    waitpid(pid, &status, WUNTRACED);
+    //cerr << "Status of " << cmd << " is: " << status << endl;
+    return status;
+    */
+    
     int result = run_cmd_(argv[0], argv, -1, -1);
     for(unsigned x=0; x<=cmds_vec.size(); x++) {
         delete []argv[x];
@@ -120,20 +139,70 @@ int run_cmd(string line) {
     return result;
 }
 
+int parse_redirection(string line) {
+    vector<string> parsed;
+    int last_found = 0;
+    
+    //Parse parse parse
+    for(unsigned i=0; i < line.size(); i++) {
+        if(line.at(i) == '<' || line.at(i) == '>' || line.at(i) == '|') {
+            if(i-last_found != 0) { //Make sure it's not one after another
+                //Push what we found into parsed
+                parsed.push_back(line.substr(last_found, i-last_found));
+                //Trim the white space and make sure it's not nothing
+                trim(parsed.at(parsed.size()-1));
+                if(parsed.at(parsed.size()-1) == "") parsed.pop_back();
+            }
+            //If we have '>>' operator
+            if(line.at(i) == '>' && i+1 < line.size() && line.at(i+1) == '>') {
+                parsed.push_back(">>");
+                i++;
+            } else {
+                parsed.push_back(string(1, line.at(i)));
+            }
+            last_found = i+1;
+        }
+    }
+    parsed.push_back(line.substr(last_found, line.size() - last_found));
+    trim(parsed.at(parsed.size()-1));
+    if(parsed.at(parsed.size()-1) == "") parsed.pop_back();
+    
+    //Output parsed vector for debugging
+    //for(int x=0; x<parsed.size(); x++) {
+    //    cout << parsed.at(x) << endl;
+    //}
+    
+    //Hookup pipes/outputs
+    for(int x=0; x<parsed.size(); x++) {
+        if(parsed.at(x) == "<") {
+            
+        } else if(parsed.at(x) == ">") {
+            
+        } else if(parsed.at(x) == ">>") {
+            
+        } else if(parsed.at(x) == "|") {
+            
+        }
+    }
+    
+    return -1;
+
+}
+
 //Recursively parse and check the conditionals
 //This is where the magic happens
 int parse_conditional_(string cond, const vector<string>& cmds, int num) {
     int result;
     if(num == 0) {
-        return run_cmd(cmds.at(0));
+        return parse_redirection(cmds.at(0));
     } else if(num == 2) {
-        result = run_cmd(cmds.at(num-2));
+        result = parse_redirection(cmds.at(num-2));
     } else {
         result = parse_conditional_(cmds.at(num-3), cmds, num-2);
     }
     if(result == 0 && (cond == "||")) return true;
     if(result != 0 && (cond == "&&")) return false;
-    return run_cmd(cmds.at(num));
+    return parse_redirection(cmds.at(num));
 }
 
 //Put conditionals into array to be parsed recursively
@@ -200,14 +269,14 @@ void parse_semi(char cmds[]) {
 
 int main(int argc, char *argv[]) {
     //int run_cmd_(char *cmd, char **argv, int in, int out) {
-    int fd[2];
+    /*int fd[2];
     if(-1 == pipe(fd)) {
         perror("Pipe fail");
         return 1;
     };
     run_cmd_("ls", argv, -1, fd[0]);
-    run_cmd_("tail", argv, fd[1], -1);
-    /*while(true) {
+    run_cmd_("tail", argv, fd[1], -1);*/
+    while(true) {
         //Grab Username
         char uname[64] = "";
         if(getlogin_r(uname, sizeof(uname)-1) != 0) {
@@ -233,7 +302,7 @@ int main(int argc, char *argv[]) {
         if(cmds.size() == 0 || cmds.at(0) == '#') {delete [] cmd; continue;}
         parse_semi(strtok(cmd, "#"));
         delete [] cmd;
-    }*/
+    }
     
     return 0;
 }
