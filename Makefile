@@ -15,3 +15,6 @@ ls:
 	rm -rfv bin
 	mkdir bin
 	g++ $(CFLAGS) src/ls.cpp -o bin/ls
+
+clean:
+	rm -rfv bin
