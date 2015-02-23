@@ -1,0 +1,197 @@
+Script started on Mon 23 Feb 2015 01:52:53 AM PST
+~
+scohe001@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents[0;95m [0;36m$[0m git clone  https://github.com/scohe001/rshell.git
+Cloning into 'rshell'...
+remote: Counting objects: 161, done.[K
+remote: Compressing objects:   4% (1/23)   [Kremote: Compressing objects:   8% (2/23)   [Kremote: Compressing objects:  13% (3/23)   [Kremote: Compressing objects:  17% (4/23)   [Kremote: Compressing objects:  21% (5/23)   [Kremote: Compressing objects:  26% (6/23)   [Kremote: Compressing objects:  30% (7/23)   [Kremote: Compressing objects:  34% (8/23)   [Kremote: Compressing objects:  39% (9/23)   [Kremote: Compressing objects:  43% (10/23)   [Kremote: Compressing objects:  47% (11/23)   [Kremote: Compressing objects:  52% (12/23)   [Kremote: Compressing objects:  56% (13/23)   [Kremote: Compressing objects:  60% (14/23)   [Kremote: Compressing objects:  65% (15/23)   [Kremote: Compressing objects:  69% (16/23)   [Kremote: Compressing objects:  73% (17/23)   [Kremote: Compressing objects:  78% (18/23)   [Kremote: Compressing objects:  82% (19/23)   [Kremote: Compressing objects:  86% (20/23)   [Kremote: Compressing objects:  91% (21/23)   [Kremote: Compressing objects:  95% (22/23)   [Kremote: Compressing objects: 100% (23/23)   [Kremote: Compressing objects: 100% (23/23), done.[K
+Receiving objects:   0% (1/161)   Receiving objects:   1% (2/161)   Receiving objects:   2% (4/161)   Receiving objects:   3% (5/161)   Receiving objects:   4% (7/161)   Receiving objects:   5% (9/161)   Receiving objects:   6% (10/161)   Receiving objects:   7% (12/161)   Receiving objects:   8% (13/161)   Receiving objects:   9% (15/161)   Receiving objects:  10% (17/161)   Receiving objects:  11% (18/161)   Receiving objects:  12% (20/161)   Receiving objects:  13% (21/161)   Receiving objects:  14% (23/161)   Receiving objects:  15% (25/161)   Receiving objects:  16% (26/161)   Receiving objects:  17% (28/161)   Receiving objects:  18% (29/161)   Receiving objects:  19% (31/161)   Receiving objects:  20% (33/161)   Receiving objects:  21% (34/161)   Receiving objects:  22% (36/161)   Receiving objects:  23% (38/161)   Receiving objects:  24% (39/161)   Receiving objects:  25% (41/161)   Receiving objects:  26% (42/161)   Receiving objects:  27% (44/161)   Receiving objects:  28% (46/161)   Receiving objects:  29% (47/161)   Receiving objects:  30% (49/161)   Receiving objects:  31% (50/161)   Receiving objects:  32% (52/161)   Receiving objects:  33% (54/161)   Receiving objects:  34% (55/161)   Receiving objects:  35% (57/161)   Receiving objects:  36% (58/161)   Receiving objects:  37% (60/161)   Receiving objects:  38% (62/161)   Receiving objects:  39% (63/161)   Receiving objects:  40% (65/161)   Receiving objects:  41% (67/161)   Receiving objects:  42% (68/161)   Receiving objects:  43% (70/161)   Receiving objects:  44% (71/161)   Receiving objects:  45% (73/161)   Receiving objects:  46% (75/161)   Receiving objects:  47% (76/161)   Receiving objects:  48% (78/161)   Receiving objects:  49% (79/161)   Receiving objects:  50% (81/161)   Receiving objects:  51% (83/161)   Receiving objects:  52% (84/161)   Receiving objects:  53% (86/161)   Receiving objects:  54% (87/161)   Receiving objects:  55% (89/161)   Receiving objects:  56% (91/161)   Receiving objects:  57% (92/161)   Receiving objects:  58% (94/161)   Receiving objects:  59% (95/161)   Receiving objects:  60% (97/161)   Receiving objects:  61% (99/161)   Receiving objects:  62% (100/161)   Receiving objects:  63% (102/161)   Receiving objects:  64% (104/161)   Receiving objects:  65% (105/161)   Receiving objects:  66% (107/161)   Receiving objects:  67% (108/161)   Receiving objects:  68% (110/161)   Receiving objects:  69% (112/161)   Receiving objects:  70% (113/161)   remote: Total 161 (delta 8), reused 0 (delta 0)[K
+Receiving objects:  71% (115/161)   Receiving objects:  72% (116/161)   Receiving objects:  73% (118/161)   Receiving objects:  74% (120/161)   Receiving objects:  75% (121/161)   Receiving objects:  76% (123/161)   Receiving objects:  77% (124/161)   Receiving objects:  78% (126/161)   Receiving objects:  79% (128/161)   Receiving objects:  80% (129/161)   Receiving objects:  81% (131/161)   Receiving objects:  82% (133/161)   Receiving objects:  83% (134/161)   Receiving objects:  84% (136/161)   Receiving objects:  85% (137/161)   Receiving objects:  86% (139/161)   Receiving objects:  87% (141/161)   Receiving objects:  88% (142/161)   Receiving objects:  89% (144/161)   Receiving objects:  90% (145/161)   Receiving objects:  91% (147/161)   Receiving objects:  92% (149/161)   Receiving objects:  93% (150/161)   Receiving objects:  94% (152/161)   Receiving objects:  95% (153/161)   Receiving objects:  96% (155/161)   Receiving objects:  97% (157/161)   Receiving objects:  98% (158/161)   Receiving objects:  99% (160/161)   Receiving objects: 100% (161/161)   Receiving objects: 100% (161/161), 39.06 KiB | 0 bytes/s, done.
+Resolving deltas:   0% (0/70)   Resolving deltas:   4% (3/70)   Resolving deltas:   7% (5/70)   Resolving deltas:  20% (14/70)   Resolving deltas:  21% (15/70)   Resolving deltas:  27% (19/70)   Resolving deltas:  42% (30/70)   Resolving deltas:  84% (59/70)   Resolving deltas:  85% (60/70)   Resolving deltas:  87% (61/70)   Resolving deltas:  88% (62/70)   Resolving deltas:  91% (64/70)   Resolving deltas:  98% (69/70)   Resolving deltas: 100% (70/70)   Resolving deltas: 100% (70/70), done.
+Checking connectivity... done
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents[0;95m [0;36m$[0m cd rshell/
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m bin/r
+bash: bin/r: No such file or directory
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m bin/[K[K[K[Kmake rshell
+rm -rfv bin
+mkdir bin
+g++ -ansi -pedantic -Wall -Werror src/rshell.cpp -o bin/rshell
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m bin/rshell 
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ls    ls #show basic commands still work
+bin  LICENSE.txt  Makefile  README.md  src  tests
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ls | cat #test pipe
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ls > test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat test.txt #test >
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ls -a >> test.txt 
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat test.txt #test >>
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+.
+..
+bin
+.git
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < test.txt #test <
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+.
+..
+bin
+.git
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ls | cat > test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < test.txt #test mix of | and >
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < test.txt | grep i #test mix of < and |
+bin
+Makefile
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < test.txt > new_test.txt #test mix of < and >
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat new_test.txt
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < test.txt >> new_test.txt #test mix of < and >>
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat new_test.txt
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < test.txt | grep i | grep f #test multiple pipes
+Makefile
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < test.txt | tr A-Z a-z | tee lower.txt | tr a-z A-Z > upper.txt #test all 3
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat lower.txt
+bin
+license.txt
+makefile
+readme.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat upper.txt
+BIN
+LICENSE.TXT
+MAKEFILE
+README.MD
+SRC
+TESTS
+TEST.TXT
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < asdfasdf #test bad file
+asdfasdf: No such file or directory
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ls | grep i || echo "test" #show || still works
+bin
+Makefile
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat < asdfsadf && echo "test" #show && still works
+asdfsadf: No such file or directory
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat        <         test.txt $ #test with spaces
+bin
+LICENSE.txt
+Makefile
+README.md
+src
+tests
+test.txt
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ exit    exit
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m exit
+exit
+~
+scohe001@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents[0;95m [0;36m$[0m exit
+exit
+~
+scohe001@hammer $ exit
+exit
+
+Script done on Mon 23 Feb 2015 01:57:02 AM PST
