@@ -1,0 +1,5 @@
+ls | cat
+ls | cat > test.txt
+cat < test.txt
+ls | cat >> test.txt
+cat < test.txt

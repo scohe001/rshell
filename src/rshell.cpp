@@ -5,6 +5,8 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <cstring>
 #include <sstream>
 #include <vector>
@@ -54,7 +56,7 @@ string &trim(string &s) {
 }
 
 //Run a command and do error checking
-//Return the return of the command (or 1 if it wasn't run)
+//Return the pid of the fork running the command
 int run_cmd_(char *cmd, char **argv, int in, int out) {
 //int run_cmd_(char *cmd, char **argv) {
     if(strcmp(cmd, "exit") == 0) exit(0);
@@ -64,17 +66,23 @@ int run_cmd_(char *cmd, char **argv, int in, int out) {
         return -1;
     } else if(pid == 0) {
         if(in != -1) {
-            close(0);
+            if(close(0) != 0) {
+                perror("Error closing stdin");
+                exit(-1);
+            }
             if(dup(in) != 0) {
                 perror("Error redirecting input");
-                return -1;
+                exit(-1);
             }
         }
         if(out != -1) {
-            close(1);
+            if(close(1) != 0) {
+                perror("Error closing stdout");
+                exit(-1);
+            }
             if(dup(out) != 1) {
                 perror("Error redirecting output");
-                return -1;
+                exit(-1);
             }
         }
         if(execvp(cmd,argv) != 0) {
@@ -86,57 +94,62 @@ int run_cmd_(char *cmd, char **argv, int in, int out) {
         }
         return -1;
     } else {
-        int status;
-        waitpid(pid, &status, WUNTRACED);
-        //cerr << "Status of " << cmd << " is: " << status << endl;
-        return status;
+        if(in != -1 && close(in) == -1) {
+            perror("Error closing file");
+        }
+        if(out != -1 && close(out) == -1) {
+            perror("Error closing file");
+        }
+        return pid;
     }
 }
 
 struct Command {
-    char *cmd;
-    char **argv;
+    string cmd;
     int in;
     int out;
     
-    Command(char *cmd, char **argv, int in, int out)
-    :cmd(cmd), argv(argv), in(in), out(out) { }
+    Command(): in(-1), out(-1) { }
+    Command(string line): cmd(line), in(-1), out(-1) { }
+    Command(string line, int in): cmd(line), in(in), out(-1) { }
+    Command(string line, int in, int out): cmd(line), in(in), out(out) { }
 };
 
-//Take a string and pull out the command (first word) and arguments
-// to pass to run_cmd_ to be run
-int run_cmd(string line) {
-    //TODO:
-    //Parse input redirection/pipes
-
-    
-    istringstream stream(line);
-    vector<string> cmds_vec;
-    string cmd;
-    while(stream >> cmd) {
-        cmds_vec.push_back(cmd);
+int run_cmds(vector<Command> cmds) {
+    vector<int> pids;
+    for(int x=0; x<cmds.size(); x++) {
+        istringstream stream(cmds.at(x).cmd);
+        vector<string> cmds_vec;
+        string cmd;
+        while(stream >> cmd) {
+            cmds_vec.push_back(cmd);
+        }
+        
+        char **argv = new char*[cmds_vec.size() + 1];
+        for(unsigned x=0; x<cmds_vec.size(); x++) {
+            argv[x] = new char[cmds_vec.at(x).size() + 1];
+            strcpy(argv[x], cmds_vec.at(x).c_str());
+        }
+        argv[cmds_vec.size()] = NULL;
+        
+        pids.push_back(run_cmd_(argv[0], argv, cmds.at(x).in, cmds.at(x).out));
+        
+        for(unsigned x=0; x<=cmds_vec.size(); x++) {
+            delete []argv[x];
+        }
+        delete []argv;
     }
     
-    char **argv = new char*[cmds_vec.size() + 1];
-    for(unsigned x=0; x<cmds_vec.size(); x++) {
-        argv[x] = new char[cmds_vec.at(x).size() + 1];
-        strcpy(argv[x], cmds_vec.at(x).c_str());
+    for(int x=0; x<pids.size(); x++) {
+        if(pids.at(x) == -1) return -1;
+        int status;
+        if(waitpid(pids.at(x), &status, WUNTRACED) == -1) {
+            perror("Error running command");
+            return -1;
+        }
+        if(status != 0) return status;
     }
-    argv[cmds_vec.size()] = NULL;
-    
-    
-    /*int status;
-    waitpid(pid, &status, WUNTRACED);
-    //cerr << "Status of " << cmd << " is: " << status << endl;
-    return status;
-    */
-    
-    int result = run_cmd_(argv[0], argv, -1, -1);
-    for(unsigned x=0; x<=cmds_vec.size(); x++) {
-        delete []argv[x];
-    }
-    delete []argv;
-    return result;
+    return 0;
 }
 
 int parse_redirection(string line) {
@@ -172,21 +185,88 @@ int parse_redirection(string line) {
     //    cout << parsed.at(x) << endl;
     //}
     
+    //string cmd;
+    //int in;
+    //int out;
+    
+    vector<Command> cmds(parsed.size(), Command());
     //Hookup pipes/outputs
     for(int x=0; x<parsed.size(); x++) {
         if(parsed.at(x) == "<") {
+            if(x == 0 || x == parsed.size()-1) {
+                cerr << "'<' operator requires two arguments, only 1 given" << endl;
+                return -1;
+            }
             
-        } else if(parsed.at(x) == ">") {
+            //Create the file handler and the command to add to cmds
+            int fd = open(parsed.at(x+1).c_str(), O_RDONLY);
+            if(fd == -1) {
+                perror(parsed.at(x+1).c_str());
+                return -1;
+            }
+            cmds.at(x-1).cmd = parsed.at(x-1);
+            cmds.at(x-1).in = fd;
+        } else if(parsed.at(x) == ">" || parsed.at(x) == ">>") {
+            if(x == 0 || x == parsed.size()-1) {
+                cerr << "'" << parsed.at(x) << "' operator requires two arguments, only 1 given" << endl;
+                return -1;
+            }
             
-        } else if(parsed.at(x) == ">>") {
-            
+            //Create the file handler and the command to add to cmds
+            int fd;
+            if(parsed.at(x) == ">") {
+                fd = open(parsed.at(x+1).c_str(), O_WRONLY | O_TRUNC | O_CREAT,
+                              S_IRUSR | S_IWUSR);
+            } else { //if(parsed.at(x) == ">>") {
+                fd = open(parsed.at(x+1).c_str(), O_WRONLY | O_APPEND | O_CREAT,
+                         S_IRUSR | S_IWUSR);
+            }
+            if(fd == -1) {
+                perror(parsed.at(x+1).c_str());
+                return -1;
+            }
+            cmds.at(x-1).cmd = parsed.at(x-1);
+            cmds.at(x-1).out = fd;
         } else if(parsed.at(x) == "|") {
+            if(x == 0 || x == parsed.size()-1) {
+                cerr << "'|' operator requires two arguments, only 1 given" << endl;
+                return -1;
+            }
             
+            //Create the pipe and update/add commands
+            int fd[2];
+            if(pipe(fd) == -1) {
+                perror("Pipe fail");
+                return -1;
+            }
+            
+            cmds.at(x-1).cmd = parsed.at(x-1);
+            cmds.at(x-1).out = fd[0];
+            
+            cmds.at(x+1).cmd = parsed.at(x+1);
+            cmds.at(x+1).in = fd[1];
         }
     }
     
-    return -1;
-
+    if(cmds.size() == 1) { //NO REDIRECTION
+        cmds.at(0).cmd = parsed.at(0);
+    }
+    
+    //Clean up commands
+    for(int x=0; x<cmds.size(); x++) {
+        if(cmds.at(x).cmd == "") {
+            cmds.erase(cmds.begin() + x);
+            x--;
+        }
+    }
+    
+    //Output commands and they're pipes for debugging
+    //for(int x=0; x<cmds.size(); x++) {
+    //    Command c = cmds[x];
+    //    cout << "cmd: " << c.cmd << "\tin: " << c.in << "\tout: " << c.out << endl;
+    //}
+    
+    return run_cmds(cmds);
 }
 
 //Recursively parse and check the conditionals
