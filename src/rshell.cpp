@@ -117,7 +117,7 @@ struct Command {
 
 int run_cmds(vector<Command> cmds) {
     vector<int> pids;
-    for(int x=0; x<cmds.size(); x++) {
+    for(unsigned x=0; x<cmds.size(); x++) {
         istringstream stream(cmds.at(x).cmd);
         vector<string> cmds_vec;
         string cmd;
@@ -140,7 +140,7 @@ int run_cmds(vector<Command> cmds) {
         delete []argv;
     }
     
-    for(int x=0; x<pids.size(); x++) {
+    for(unsigned x=0; x<pids.size(); x++) {
         if(pids.at(x) == -1) return -1;
         int status;
         if(waitpid(pids.at(x), &status, WUNTRACED) == -1) {
@@ -191,7 +191,7 @@ int parse_redirection(string line) {
     
     vector<Command> cmds(parsed.size(), Command());
     //Hookup pipes/outputs
-    for(int x=0; x<parsed.size(); x++) {
+    for(unsigned x=0; x<parsed.size(); x++) {
         if(parsed.at(x) == "<") {
             if(x == 0 || x == parsed.size()-1) {
                 cerr << "'<' operator requires two arguments, only 1 given" << endl;
@@ -253,7 +253,7 @@ int parse_redirection(string line) {
     }
     
     //Clean up commands
-    for(int x=0; x<cmds.size(); x++) {
+    for(unsigned x=0; x<cmds.size(); x++) {
         if(cmds.at(x).cmd == "") {
             cmds.erase(cmds.begin() + x);
             x--;
