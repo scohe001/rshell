@@ -117,8 +117,8 @@ struct Command {
 
 int run_cmds(vector<Command> cmds) {
     vector<int> pids;
-    for(unsigned x=0; x<cmds.size(); x++) {
-        istringstream stream(cmds.at(x).cmd);
+    for(unsigned i=0; i<cmds.size(); i++) {
+        istringstream stream(cmds.at(i).cmd);
         vector<string> cmds_vec;
         string cmd;
         while(stream >> cmd) {
@@ -132,7 +132,7 @@ int run_cmds(vector<Command> cmds) {
         }
         argv[cmds_vec.size()] = NULL;
         
-        pids.push_back(run_cmd_(argv[0], argv, cmds.at(x).in, cmds.at(x).out));
+        pids.push_back(run_cmd_(argv[0], argv, cmds.at(i).in, cmds.at(i).out));
         
         for(unsigned x=0; x<=cmds_vec.size(); x++) {
             delete []argv[x];
