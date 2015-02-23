@@ -206,6 +206,11 @@ int parse_redirection(string line) {
             }
             cmds.at(x-1).cmd = parsed.at(x-1);
             cmds.at(x-1).in = fd;
+            
+            //Cleanup commands and parsed
+            parsed.erase(parsed.begin()+x, parsed.begin()+x+2);
+            cmds.erase(cmds.begin()+x, cmds.begin()+x+2);
+            x--;
         } else if(parsed.at(x) == ">" || parsed.at(x) == ">>") {
             if(x == 0 || x == parsed.size()-1) {
                 cerr << "'" << parsed.at(x) << "' operator requires two arguments, only 1 given" << endl;
@@ -227,6 +232,11 @@ int parse_redirection(string line) {
             }
             cmds.at(x-1).cmd = parsed.at(x-1);
             cmds.at(x-1).out = fd;
+            
+            //Cleanup commands and parsed
+            parsed.erase(parsed.begin()+x, parsed.begin()+x+2);
+            cmds.erase(cmds.begin()+x, cmds.begin()+x+2);
+            x--;
         } else if(parsed.at(x) == "|") {
             if(x == 0 || x == parsed.size()-1) {
                 cerr << "'|' operator requires two arguments, only 1 given" << endl;
@@ -241,10 +251,10 @@ int parse_redirection(string line) {
             }
             
             cmds.at(x-1).cmd = parsed.at(x-1);
-            cmds.at(x-1).out = fd[0];
+            cmds.at(x-1).out = fd[1];
             
             cmds.at(x+1).cmd = parsed.at(x+1);
-            cmds.at(x+1).in = fd[1];
+            cmds.at(x+1).in = fd[0];
         }
     }
     
@@ -265,7 +275,7 @@ int parse_redirection(string line) {
     //    Command c = cmds[x];
     //    cout << "cmd: " << c.cmd << "\tin: " << c.in << "\tout: " << c.out << endl;
     //}
-    
+    //return -1;
     return run_cmds(cmds);
 }
 

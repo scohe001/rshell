@@ -1,5 +1,19 @@
-ls | cat
+ls #show basic commands still work
+ls | cat #test pipe
+ls > test.txt
+cat test.txt #test >
+ls -a >> test.txt 
+cat test.txt #test >>
+cat < test.txt #test <
 ls | cat > test.txt
-cat < test.txt
-ls | cat >> test.txt
-cat < test.txt
+cat < test.txt #test mix of | and >
+cat < test.txt | grep i #test mix of < and |
+cat < test.txt > new_test.txt #test mix of < and >
+cat < test.txt >> new_test.txt #test mix of < and >>
+cat < test.txt | grep i | grep f #test multiple pipes
+cat < test.txt | tr A-Z a-z | tee lower.txt | tr a-z A-Z > upper.txt #test all 3
+cat lower.txt
+cat upper.txt
+cat < asdfasdf #test bad file
+ls | grep i || echo "test" #show || still works
+cat < asdfsadf && echo "test" #show && still works
