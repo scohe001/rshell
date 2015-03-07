@@ -167,30 +167,6 @@ test.txt
 [s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m exit
 exit
 ~
-scohe001@hammer $ cs100
-[0;91m
-===============================================================================
-|                                                                             |
-| You have enabled settings specific for cs100.  Everything you do is being   |
-| recorded to measure your progress in the class.                             |
-|                                                                             |
-| Important commands for the class:                                           |
-|   * calcgrade.sh          displays a detailed breakdown of your grade       |
-|   * typespeed             practice typing unix commands                     |
-|                                                                             |
-| Important commands for general C++ programming:                             |
-|   * make                  don't call g++ manually; let make do the work!    |
-|   * gdb                   the GNU debugger                                  |
-|   * valgrind              get rid of your memory leaks                      |
-|   * cppcheck              static analysis tool                              |
-|   * man                   find help about any syscall / terminal command    |
-|                                                                             |
-===============================================================================
-[0m
-[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/
-[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents[0;95m [0;36m$[0m exit
-exit
-~
 scohe001@hammer $ exit
 exit
 

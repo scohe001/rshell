@@ -14,8 +14,12 @@
 #include <functional>
 #include <cctype>
 #include <locale>
+#include <signal.h>
+
+#include "commands.h"
 
 using namespace std;
+
 
 //the following are UBUNTU/LINUX ONLY terminal color codes.
 #define RESET   "\033[0m"
@@ -58,13 +62,17 @@ string &trim(string &s) {
 //Run a command and do error checking
 //Return the pid of the fork running the command
 int run_cmd_(char *cmd, char **argv, int in, int out) {
-//int run_cmd_(char *cmd, char **argv) {
-    if(strcmp(cmd, "exit") == 0) exit(0);
+    //Check to see if it's a custom command
+    if(COMMANDS.find(string(cmd)) != COMMANDS.end()) return (*COMMANDS[string(cmd)])(argv);
+    //Otherwise find and run it with exec
     int pid = fork();
     if(pid == -1) {
         perror("fork fail");
         return -1;
     } else if(pid == 0) {
+        //Unbind signal handlers for children
+        signal(SIGINT, 0);
+        signal(SIGTSTP, 0);
         if(in != -1) {
             if(close(0) != 0) {
                 perror("Error closing stdin");
@@ -85,15 +93,14 @@ int run_cmd_(char *cmd, char **argv, int in, int out) {
                 exit(-1);
             }
         }
+        //TODO:
+        //Find cmd instead of using execvp
         if(execvp(cmd,argv) != 0) {
-            char *err = new char[7 + strlen(cmd) + 1];
-            strcpy(err, "-bqsh: ");
-            strcat(err, cmd);
-            perror(err);
-            delete [] err;
+            perror(cmd);
         }
         return -1;
     } else {
+        //Close any pipes or files we had open
         if(in != -1 && close(in) == -1) {
             perror("Error closing file");
         }
@@ -357,34 +364,50 @@ void parse_semi(char cmds[]) {
     }
 }
 
+void print_prompt() {
+    //Grab Username
+    char uname[64] = "";
+    if(getlogin_r(uname, sizeof(uname)-1) != 0) {
+        perror("Error fetching Username");
+        strcpy(uname, "???");
+    }
+    
+    //Grab hostname
+    char hostname[64] = "";
+    if(gethostname(hostname, sizeof(hostname)-1) != 0) {
+        perror("Error fetching Hostname");
+        strcpy(hostname, "???");
+    }
+    
+    cout << GREEN << uname << "@" << YELLOW << hostname << RESET << "$ ";
+}
+
+bool waiting = false; //Will be true while rshell waits for input
+
+void ctrl_c(int sig) {
+    cout << endl;
+    if(waiting) print_prompt();
+    cout.flush(); //ensure the new prompt gets printed
+}
+
+//system("CLS")
+
 int main(int argc, char *argv[]) {
-    //int run_cmd_(char *cmd, char **argv, int in, int out) {
-    /*int fd[2];
-    if(-1 == pipe(fd)) {
-        perror("Pipe fail");
-        return 1;
-    };
-    run_cmd_("ls", argv, -1, fd[0]);
-    run_cmd_("tail", argv, fd[1], -1);*/
+    //Populate all of our commands
+    COMMANDS["exit"]    = quit;
+    COMMANDS["cd"]      = cd;
+    
+    //Bind signal handlers
+    signal(SIGINT, ctrl_c);
+    signal(SIGTSTP, ctrl_c);
+    
     while(true) {
-        //Grab Username
-        char uname[64] = "";
-        if(getlogin_r(uname, sizeof(uname)-1) != 0) {
-            perror("Error fetching Username");
-            strcpy(uname, "???");
-        }
-        
-        //Grab hostname
-        char hostname[64] = "";
-        if(gethostname(hostname, sizeof(hostname)-1) != 0) {
-            perror("Error fetching Hostname");
-            strcpy(hostname, "???");
-        }
-        
+        print_prompt();
         //Grab a line and convert it to a C-String
+        waiting = true;
         string cmds;
-        cout << GREEN << uname << "@" << YELLOW << hostname << RESET << "$ ";
         getline(cin, cmds);
+        waiting = false;
         char *cmd = new char[cmds.size() + 1];
         strcpy(cmd, cmds.c_str());
         
