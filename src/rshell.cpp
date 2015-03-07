@@ -149,6 +149,7 @@ int run_cmds(vector<Command> cmds) {
     
     for(unsigned x=0; x<pids.size(); x++) {
         if(pids.at(x) == -1) return -1;
+        if(pids.at(x) == 0) continue; //Custom command
         int status;
         if(waitpid(pids.at(x), &status, WUNTRACED) == -1) {
             perror("Error running command");
