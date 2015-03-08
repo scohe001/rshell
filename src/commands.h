@@ -31,7 +31,25 @@ int quit(char **argv, int in, int out) {
 }
 
 int cd(char **argv, int in, int out) {
-    if(!argv[1] && in == -1) {
+    if(out != -1 && close(out) == -1) perror("Error closing file");
+    if(in != -1) {
+        std::string path;
+        char buf[64];
+        int bytes_read;
+        while((bytes_read = read(in, buf, 64)) == 64) {
+            path += std::string(buf);
+        }
+        if(bytes_read == -1) perror("Error reading from file");
+        if(close(in) == -1) perror("Error closing file");
+        
+        if(chdir(path.c_str()) == -1) {
+            perror("cd");
+            return -1;
+        }
+        
+        if(close(in) == -1) perror("Error closing file");
+    }
+    if(!argv[1]) {
         std::cout << "cd: No directory given" << std::endl;
         return -1;
     }
