@@ -51,7 +51,7 @@ int execute(char *cmd, char **argv) {
     string path = ppath;
     vector<string> paths;
     split(ppath, ':', paths);
-    for(int x=0; x<paths.size(); x++) {
+    for(unsigned x=0; x<paths.size(); x++) {
         paths.at(x) += "/";
         paths.at(x) += cmd;
         execv(paths.at(x).c_str(), argv);
