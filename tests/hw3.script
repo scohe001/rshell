@@ -1,0 +1,94 @@
+Script started on Sun 08 Mar 2015 02:18:59 PM PDT
+~
+scohe001@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m pwd
+/home/csmajs/scohe001
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd Documents/
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents[0;95m [0;36m$[0m cd Documents/pwd[Kexitcho $PATHbin/rshell [4hgdb [4l[C[C[C[C[C[C[C[C[C[C[C[5Pmake debugcd rshell/git clone http://github.com/scohe001/rshell.git[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crm -rfv rshell/[Kgit clone http://github.com/scohe001/rshell.git[Cs://github.com/scohe001/rshell.git
+Cloning into 'rshell'...
+remote: Counting objects: 199, done.[K
+remote: Compressing objects:   2% (1/34)   [Kremote: Compressing objects:   5% (2/34)   [Kremote: Compressing objects:   8% (3/34)   [Kremote: Compressing objects:  11% (4/34)   [Kremote: Compressing objects:  14% (5/34)   [Kremote: Compressing objects:  17% (6/34)   [Kremote: Compressing objects:  20% (7/34)   [Kremote: Compressing objects:  23% (8/34)   [Kremote: Compressing objects:  26% (9/34)   [Kremote: Compressing objects:  29% (10/34)   [Kremote: Compressing objects:  32% (11/34)   [Kremote: Compressing objects:  35% (12/34)   [Kremote: Compressing objects:  38% (13/34)   [Kremote: Compressing objects:  41% (14/34)   [Kremote: Compressing objects:  44% (15/34)   [Kremote: Compressing objects:  47% (16/34)   [Kremote: Compressing objects:  50% (17/34)   [Kremote: Compressing objects:  52% (18/34)   [Kremote: Compressing objects:  55% (19/34)   [Kremote: Compressing objects:  58% (20/34)   [Kremote: Compressing objects:  61% (21/34)   [Kremote: Compressing objects:  64% (22/34)   [Kremote: Compressing objects:  67% (23/34)   [Kremote: Compressing objects:  70% (24/34)   [Kremote: Compressing objects:  73% (25/34)   [Kremote: Compressing objects:  76% (26/34)   [Kremote: Compressing objects:  79% (27/34)   [Kremote: Compressing objects:  82% (28/34)   [Kremote: Compressing objects:  85% (29/34)   [Kremote: Compressing objects:  88% (30/34)   [Kremote: Compressing objects:  91% (31/34)   [Kremote: Compressing objects:  94% (32/34)   [Kremote: Compressing objects:  97% (33/34)   [Kremote: Compressing objects: 100% (34/34)   [Kremote: Compressing objects: 100% (34/34), done.[K
+Receiving objects:   0% (1/199)   Receiving objects:   1% (2/199)   Receiving objects:   2% (4/199)   Receiving objects:   3% (6/199)   Receiving objects:   4% (8/199)   Receiving objects:   5% (10/199)   Receiving objects:   6% (12/199)   Receiving objects:   7% (14/199)   Receiving objects:   8% (16/199)   Receiving objects:   9% (18/199)   Receiving objects:  10% (20/199)   Receiving objects:  11% (22/199)   Receiving objects:  12% (24/199)   Receiving objects:  13% (26/199)   Receiving objects:  14% (28/199)   Receiving objects:  15% (30/199)   Receiving objects:  16% (32/199)   Receiving objects:  17% (34/199)   Receiving objects:  18% (36/199)   Receiving objects:  19% (38/199)   Receiving objects:  20% (40/199)   Receiving objects:  21% (42/199)   Receiving objects:  22% (44/199)   Receiving objects:  23% (46/199)   Receiving objects:  24% (48/199)   Receiving objects:  25% (50/199)   Receiving objects:  26% (52/199)   Receiving objects:  27% (54/199)   Receiving objects:  28% (56/199)   Receiving objects:  29% (58/199)   Receiving objects:  30% (60/199)   Receiving objects:  31% (62/199)   Receiving objects:  32% (64/199)   Receiving objects:  33% (66/199)   Receiving objects:  34% (68/199)   Receiving objects:  35% (70/199)   Receiving objects:  36% (72/199)   Receiving objects:  37% (74/199)   Receiving objects:  38% (76/199)   Receiving objects:  39% (78/199)   Receiving objects:  40% (80/199)   Receiving objects:  41% (82/199)   Receiving objects:  42% (84/199)   Receiving objects:  43% (86/199)   Receiving objects:  44% (88/199)   Receiving objects:  45% (90/199)   Receiving objects:  46% (92/199)   Receiving objects:  47% (94/199)   Receiving objects:  48% (96/199)   Receiving objects:  49% (98/199)   Receiving objects:  50% (100/199)   Receiving objects:  51% (102/199)   Receiving objects:  52% (104/199)   Receiving objects:  53% (106/199)   Receiving objects:  54% (108/199)   Receiving objects:  55% (110/199)   Receiving objects:  56% (112/199)   Receiving objects:  57% (114/199)   Receiving objects:  58% (116/199)   Receiving objects:  59% (118/199)   Receiving objects:  60% (120/199)   Receiving objects:  61% (122/199)   Receiving objects:  62% (124/199)   Receiving objects:  63% (126/199)   Receiving objects:  64% (128/199)   Receiving objects:  65% (130/199)   Receiving objects:  66% (132/199)   Receiving objects:  67% (134/199)   Receiving objects:  68% (136/199)   Receiving objects:  69% (138/199)   Receiving objects:  70% (140/199)   Receiving objects:  71% (142/199)   Receiving objects:  72% (144/199)   Receiving objects:  73% (146/199)   Receiving objects:  74% (148/199)   Receiving objects:  75% (150/199)   Receiving objects:  76% (152/199)   Receiving objects:  77% (154/199)   Receiving objects:  78% (156/199)   Receiving objects:  79% (158/199)   Receiving objects:  80% (160/199)   Receiving objects:  81% (162/199)   Receiving objects:  82% (164/199)   Receiving objects:  83% (166/199)   Receiving objects:  84% (168/199)   remote: Total 199 (delta 16), reused 0 (delta 0), pack-reused 165[K
+Receiving objects:  85% (170/199)   Receiving objects:  86% (172/199)   Receiving objects:  87% (174/199)   Receiving objects:  88% (176/199)   Receiving objects:  89% (178/199)   Receiving objects:  90% (180/199)   Receiving objects:  91% (182/199)   Receiving objects:  92% (184/199)   Receiving objects:  93% (186/199)   Receiving objects:  94% (188/199)   Receiving objects:  95% (190/199)   Receiving objects:  96% (192/199)   Receiving objects:  97% (194/199)   Receiving objects:  98% (196/199)   Receiving objects:  99% (198/199)   Receiving objects: 100% (199/199)   Receiving objects: 100% (199/199), 49.17 KiB | 0 bytes/s, done.
+Resolving deltas:   0% (0/93)   Resolving deltas:   3% (3/93)   Resolving deltas:  15% (14/93)   Resolving deltas:  16% (15/93)   Resolving deltas:  24% (23/93)   Resolving deltas:  26% (25/93)   Resolving deltas:  40% (38/93)   Resolving deltas:  74% (69/93)   Resolving deltas:  77% (72/93)   Resolving deltas:  80% (75/93)   Resolving deltas:  81% (76/93)   Resolving deltas:  82% (77/93)   Resolving deltas:  84% (79/93)   Resolving deltas:  95% (89/93)   Resolving deltas:  96% (90/93)   Resolving deltas:  97% (91/93)   Resolving deltas:  98% (92/93)   Resolving deltas: 100% (93/93)   Resolving deltas: 100% (93/93), done.
+Checking connectivity... done
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents[0;95m [0;36m$[0m cd rshell/
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m make rshell
+rm -rfv bin
+mkdir bin
+g++ -ansi -pedantic -Wall -Werror src/rshell.cpp -o bin/rshell
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m bin/rshell
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ clear #test command from /usr/bin
+[H[2J/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ls #test command from /bin
+bin  LICENSE.txt  Makefile  README.md  src  tests
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ asdf #test bad command
+Error finding command: No such file or directory
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ #ctrl0c  -c tests...
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ ^C
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat
+test
+test
+^C
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat | cat | cat | tr a-z A-z Z #show ctrl-con m     on multiple processes
+test
+TEST
+asdf
+ASDF
+^C
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ 
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ @ #cd tests
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cd #show with no p params
+cd: No directory given
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cd bin #w show with one
+/home/csmajs/scohe001/Documents/rshell/bin
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cd ../ asdfasdf asdpofaiwehf #show it ignores all but first
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cd    echo bin | cd #show it works with redirection
+/home/csmajs/scohe001/Documents/rshell/bin
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cd ../ | cat #show it just closes pip/ e/file for output redirection
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat test.txt            echo bin > test.txt
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cat test.txt
+bin
+/home/csmajs/scohe001/Documents/rshell
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ cd < test.tt   t xt #show input redirection from file
+/home/csmajs/scohe001/Documents/rshell/bin
+[32mscohe001@[33mhammer.cs.ucr.edu[0m$ x exit
+[s%%%%%%%%%%[u[0;32mscohe001[0;36m@[0;32mcs100[0;36m:[0;32m~/Documents/rshell[0;95m (master) [0;36m$[0m exit
+exit
+~
+scohe001@hammer $ exit
+exit
+
+Script done on Sun 08 Mar 2015 02:22:54 PM PDT
