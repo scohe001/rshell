@@ -18,20 +18,20 @@
 
 /////////////////////////// CUSTOM COMMANDS ////////////////////////////////////
 
-typedef int (*command)(char**);
+typedef int (*command)(char**, int, int);
 
 int quit(char **argv);
 int cd(char **argv);
 
 std::map<std::string, command> COMMANDS;
 
-int quit(char **argv) {
+int quit(char **argv, int in, int out) {
     exit(0);
     return -1;
 }
 
-int cd(char **argv) {
-    if(!argv[1]) {
+int cd(char **argv, int in, int out) {
+    if(!argv[1] && in == -1) {
         std::cout << "cd: No directory given" << std::endl;
         return -1;
     }

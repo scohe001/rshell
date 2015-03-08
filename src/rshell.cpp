@@ -63,7 +63,7 @@ string &trim(string &s) {
 //Return the pid of the fork running the command
 int run_cmd_(char *cmd, char **argv, int in, int out) {
     //Check to see if it's a custom command
-    if(COMMANDS.find(string(cmd)) != COMMANDS.end()) return (*COMMANDS[string(cmd)])(argv);
+    if(COMMANDS.find(string(cmd)) != COMMANDS.end()) return (*COMMANDS[string(cmd)])(argv, in, out);
     //Otherwise find and run it with exec
     int pid = fork();
     if(pid == -1) {
@@ -380,7 +380,16 @@ void print_prompt() {
         strcpy(hostname, "???");
     }
     
+    char *path;
+    path = getcwd(NULL, 0);
+    if(path == 0) {
+        perror("Error fetching current dir");
+        path = new char('\0'); //fill path anyways
+    }
+    cout << path << endl;
     cout << GREEN << uname << "@" << YELLOW << hostname << RESET << "$ ";
+    
+    delete []path;
 }
 
 bool waiting = false; //Will be true while rshell waits for input
