@@ -1,0 +1,17 @@
+ls #test command from /bin
+clear #test command from /usr/bin
+asdf #test bad command
+
+ctrl-c #show ctrl-c on empty prompt
+cat
+ctrl-c #show ctrl-c on running process
+cat | cat | cat | tr a-z A-Z
+ctrl-c #show ctrl-c on multiple processes
+
+cd #show cd with no params
+cd bin #show it works with one
+cd ../ asdfasdf fewasdfasdf #show it ignores any but the first
+echo bin | cd #show it works with input redirection
+cd ../ | cat #show it just closes the pipe/file for output redirection
+cat test.txt
+cd < test.txt #show it works with input redirection from files

@@ -40,23 +40,24 @@ using namespace std;
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-//The following three functions are taken from the first answer on this question
-//http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
-// trim from start
-string &ltrim(string &s) {
-    s.erase(s.begin(), find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace))));
-    return s;
-}
-
-// trim from end
-string &rtrim(string &s) {
-    s.erase(find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(), s.end());
-    return s;
-}
-
-// trim from both ends
-string &trim(string &s) {
-    return ltrim(rtrim(s));
+//To be called by forked children only
+int execute(char *cmd, char **argv) {
+    //int execv(const char *path, char *const argv[]);
+    const char *ppath = getenv("PATH");
+    if(!ppath) {
+        perror("Error fetching path");
+        return -1;
+    }
+    string path = ppath;
+    vector<string> paths;
+    split(ppath, ':', paths);
+    for(int x=0; x<paths.size(); x++) {
+        paths.at(x) += "/";
+        paths.at(x) += cmd;
+        execv(paths.at(x).c_str(), argv);
+    }
+    perror("Error finding command");
+    return -1;
 }
 
 //Run a command and do error checking
@@ -93,11 +94,7 @@ int run_cmd_(char *cmd, char **argv, int in, int out) {
                 exit(-1);
             }
         }
-        //TODO:
-        //Find cmd instead of using execvp
-        if(execvp(cmd,argv) != 0) {
-            perror(cmd);
-        }
+        execute(cmd, argv);
         return -1;
     } else {
         //Close any pipes or files we had open
